@@ -4,8 +4,10 @@ let player1 = [];
 let player2 = [];
 let backup1 = [];
 let backup2 = [];
+let inPlay = [];
 let player1_Points = 0;
 let player2_Points = 0;
+let roundWon = false;
 let renderedCards = false;
 
 function getDeck()
@@ -75,23 +77,37 @@ function ClearCards ()
         play.removeChild(play.firstChild);
         play2.removeChild(play2.firstChild);
     }
+    roundWon = false;
+    console.log(player1);
+    console.log(player2);
 }
 
 function CheckWin () {
     let card1 = values.indexOf(player1[player1.length-1].Value);
     let card2 = values.indexOf(player2[player2.length-1].Value);
+    inPlay.push(player1[player1.length-1]);
+    inPlay.push(player2[player2.length-1]);
+    console.log(inPlay);
     console.log(card1);
     console.log(card2);
-    console.log(backup1, backup2)
+    console.log(backup1, backup2);
     if(card1 > card2)
     {
-        backup1.push(player1[player1.length-1]);
-        backup1.push(player2[player2.length-1]);
+        while (inPlay.length > 0) {
+            backup1.push(inPlay[inPlay.length-1]);
+            inPlay.pop();
+        }
         document.getElementById("points").innerText = `Player1: ${backup1.length} Player2: ${backup2.length}`
+        roundWon = true;
     } else if(card2 > card1) {
-        backup2.push(player1[player1.length-1]);
-        backup2.push(player2[player2.length-1]);
+        while (inPlay.length > 0) {
+            backup2.push(inPlay[inPlay.length-1]);
+            inPlay.pop();
+        }
         document.getElementById("points").innerText = `Player1: ${backup1.length} Player2: ${backup2.length}`
+        roundWon = true;
+    } else if(card1 === card2) {
+        roundWon = false;
     }
 }
 
@@ -107,7 +123,9 @@ function playCard()
         player2 = backup2;
         backup2 = [];
     }
-    ClearCards();
+    if (roundWon === true) {
+        ClearCards();
+    }
     CheckWin();
     document.getElementById("play").appendChild(document.createElement('img')).src = `image/${player1[player1.length-1].Value}_${player1[player1.length-1].Type}.png`;
     player1.pop();
