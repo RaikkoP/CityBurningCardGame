@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="shuffle(getDeck())">
+<br>
+<br>
+<button onclick="renderCards(),renderCardsNumber()">Start Game</button>
+<br>
+<br>
+<br>
+<br>
+<div>
+    <a onclick="playCard()" id="player1_cardBack"></a>
+    <p id="player1_count"></p>
+    <div id="play"></div>
+</div>
+<br>
+<br>
+<div>
+    <h3 id="points"></h3>
+</div>
+<br>
+<br>
+<div id="player2_cardBack">
+    <div id="play2"></div>
+    <p id="player2_count"></p>
+</div>
+</body>
+<script src="app.js"> </script>
+</html>
